@@ -200,10 +200,21 @@ footer b{color:var(--ink);font-family:var(--display);font-size:16px}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .watermark img{filter:brightness(0) invert(1);opacity:.06}}
 @media print{.watermark{position:fixed}}
 
+
+/* tema escuro: logos sem fundo. Inverte as cores (branco vira preto, azul-marinho vira claro), devolve o matiz e transforma o preto em transparência. */
+:root[data-theme="dark"] .plate{background:transparent;box-shadow:none}
+:root[data-theme="dark"] .brand .chip{background:transparent;box-shadow:none}
+:root[data-theme="dark"] .plate img,:root[data-theme="dark"] .brand img{mix-blend-mode:normal;filter:invert(1) hue-rotate(180deg) url(#logo-dark)}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .plate{background:transparent;box-shadow:none}
+  :root:not([data-theme="light"]) .brand .chip{background:transparent;box-shadow:none}
+  :root:not([data-theme="light"]) .plate img,:root:not([data-theme="light"]) .brand img{mix-blend-mode:normal;filter:invert(1) hue-rotate(180deg) url(#logo-dark)}
+}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 <script>try{var _t=localStorage.getItem('estatlab-theme');if(_t==='light'||_t==='dark')document.documentElement.setAttribute('data-theme',_t)}catch(e){}</script>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><filter id="logo-dark" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 4 4 0 -0.5"/></filter></svg>
 <div class="watermark" aria-hidden="true"><img src="assets/sigma.png" alt="" width="900" height="900"></div>
 
 <header>
