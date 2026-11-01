@@ -13,11 +13,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: página única. Cabeçalho fixo, hero em duas colunas (texto + logo), simulação interativa do Teorema Central do Limite, serviços assimétricos, público, propósito em faixa escura, contato. */
+/* Layout: página única. Cabeçalho fixo, hero em duas colunas (texto + logo), serviços assimétricos, público, propósito em faixa escura, contato. */
 :root{
   --bg:#FFFFFF; --surface:#EEF5FF; --ink:#0B2A55; --muted:#48607F; --line:#D3E3F7;
   --accent:#0A6FD8; --sky:#00B4FF; --band:#0A6FD8; --band-ink:#FFFFFF; --band-muted:#D6E8FF;
-  --plate:#FFFFFF; --bar:#1E90FF; --bar-hi:#00B4FF; --curve:#0B2A55; --shadow:0 18px 40px -24px rgba(11,42,85,.35);
+  --plate:#FFFFFF; --bar:#1E90FF; --bar-hi:#00B4FF; --curve:#0B2A55; --warm:#B45309; --shadow:0 18px 40px -24px rgba(11,42,85,.35);
   --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
   --body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -25,11 +25,11 @@
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#07142B; --surface:#0D2145; --ink:#E8F0FF; --muted:#9DB3D6; --line:#1F3667;
   --accent:#4DB3FF; --sky:#35C2FF; --band:#0D2145; --band-ink:#EAF2FF; --band-muted:#A9C0E4;
-  --bar:#2F9BFF; --bar-hi:#4FD0FF; --curve:#E8F0FF; --shadow:0 18px 40px -24px rgba(0,0,0,.7); color-scheme:dark}}
+  --bar:#2F9BFF; --bar-hi:#4FD0FF; --curve:#E8F0FF; --warm:#F5B547; --shadow:0 18px 40px -24px rgba(0,0,0,.7); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#07142B; --surface:#0D2145; --ink:#E8F0FF; --muted:#9DB3D6; --line:#1F3667;
   --accent:#4DB3FF; --sky:#35C2FF; --band:#0D2145; --band-ink:#EAF2FF; --band-muted:#A9C0E4;
-  --bar:#2F9BFF; --bar-hi:#4FD0FF; --curve:#E8F0FF; --shadow:0 18px 40px -24px rgba(0,0,0,.7); color-scheme:dark}
+  --bar:#2F9BFF; --bar-hi:#4FD0FF; --curve:#E8F0FF; --warm:#F5B547; --shadow:0 18px 40px -24px rgba(0,0,0,.7); color-scheme:dark}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:76px}
@@ -123,23 +123,6 @@ section{padding-block:clamp(48px,8vw,96px)}
 .about .txt{color:var(--muted)}
 @media (max-width:820px){.about{grid-template-columns:1fr}}
 
-/* simulação */
-.lab{background:var(--surface);border-block:1px solid var(--line)}
-.lab-grid{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:clamp(20px,3vw,40px);align-items:start}
-.canvas-box{border:1px solid var(--line);border-radius:18px;background:var(--bg);padding:14px 14px 8px}
-canvas{display:block;width:100%;height:340px}
-.panel{display:grid;gap:22px}
-.field label,.field .lbl{display:block;font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.seg{display:flex;gap:6px;flex-wrap:wrap}
-.seg button{font:500 14px/1 var(--mono);padding:10px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
-.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;font-family:var(--mono);font-variant-numeric:tabular-nums}
-.stats div{border-top:1px solid var(--line);padding-top:8px}
-.stats dt{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.stats dd{margin:2px 0 0;font-size:20px;font-weight:500}
-.note{font-size:14px;color:var(--muted);line-height:1.5}
-@media (max-width:860px){.lab-grid{grid-template-columns:1fr}canvas{height:280px}}
-
 /* serviços */
 .services{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}
 .stack{display:grid;gap:20px}
@@ -193,6 +176,9 @@ dl.info dd{margin:0;min-width:0;overflow-wrap:anywhere}
 footer{border-top:1px solid var(--line);padding-block:32px}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between;align-items:center;color:var(--muted);font-size:14px}
 footer b{color:var(--ink);font-family:var(--display);font-size:16px}
+.fbrand{display:flex;align-items:center;gap:16px}
+.fbrand .uepb{display:block;flex:none;line-height:0}
+.fbrand .uepb img{height:88px;width:auto}
 
 /* marca d'água: sigma fixo ao centro, atrás do conteúdo legível, sem capturar cliques */
 .watermark{position:fixed;inset:0;z-index:5;pointer-events:none;display:grid;place-items:center;overflow:hidden}
@@ -202,7 +188,108 @@ footer b{color:var(--ink);font-family:var(--display);font-size:16px}
 @media print{.watermark{position:fixed}}
 
 
+/* abas e passos */
+:root{--warn:#D9381E}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--warn:#FF7A66}}
+:root[data-theme="dark"]{--warn:#FF7A66}
+.teamtabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+.teamtabs button{font:600 15px/1 var(--body);padding:12px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg);color:var(--muted);cursor:pointer}
+.teamtabs button:hover{color:var(--ink);border-color:var(--accent)}
+.teamtabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.steps{margin:0;padding:0;list-style:none;display:grid;gap:16px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:start;color:var(--muted);font-size:16px}
+.steps li::before{counter-increment:s;content:counter(s);width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--bg);display:grid;place-items:center;font:600 13px/1 var(--mono)}
+.steps b{color:var(--ink);font-weight:600}
+
+/* equipe */
+.people{display:grid;gap:20px}
+.person{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:28px;align-items:start;min-width:0}
+.photo{position:relative;width:100%;aspect-ratio:4/5;border-radius:16px;overflow:hidden;background:color-mix(in srgb,var(--accent) 12%,var(--bg));border:2px dashed color-mix(in srgb,var(--accent) 45%,transparent);display:grid;place-items:center}
+.photo .initials{font:800 44px/1 var(--display);color:var(--accent);letter-spacing:.02em}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--bg)}
+.pinfo{display:grid;gap:10px;align-content:start;min-width:0}
+@media (max-width:640px){.person{grid-template-columns:1fr}.photo{width:min(100%,220px)}}
+.person h3{font-size:24px;font-weight:700}
+.prole{font:500 12px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.pdesc{color:var(--muted);font-size:16px}
+.pdesc a{color:var(--accent);text-underline-offset:3px;font-weight:600}
+.team-intro{color:var(--muted);max-width:68ch;margin-bottom:24px}
+/* como participar */
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.path{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(22px,3vw,32px);display:grid;gap:16px;min-width:0}
+.path h3{font-size:clamp(24px,2.6vw,30px);font-weight:700}
+.path > p{color:var(--muted)}
+.bring{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:16px}
+.bring .lbl{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.bring ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.bring li{font:500 13px/1 var(--mono);padding:8px 12px;border-radius:999px;border:1.5px solid var(--accent);color:var(--accent);background:var(--bg)}
+.eligible{margin-top:20px;background:var(--band);color:var(--band-ink);border-radius:20px;padding:clamp(22px,3vw,32px);display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between}
+.eligible p{max-width:60ch;color:var(--band-muted)}
+.eligible b{color:var(--band-ink);font-weight:600}
+.eligible .btn{background:#fff;color:#0A6FD8;border-color:#fff}
+@media (max-width:820px){.paths{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* seleção de trabalhos: números, calendário, critérios */
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.facts div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;display:grid;gap:6px;align-content:start}
+.facts b{font:800 clamp(30px,4vw,42px)/1 var(--display);color:var(--accent);letter-spacing:-.02em}
+.facts span{color:var(--muted);font-size:15px;line-height:1.4}
+@media (max-width:820px){.facts{grid-template-columns:1fr 1fr}}
+.cal-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(18px,3vw,32px);display:grid;gap:24px;margin-bottom:20px;min-width:0}
+.cal-top{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:end}
+.cal-top h3{font-size:clamp(24px,2.6vw,30px);font-weight:700;margin-top:10px}
+.cal-status{font:500 14px/1.4 var(--mono);color:var(--ink);background:var(--bg);border:1.5px solid var(--accent);border-radius:999px;padding:8px 14px}
+.cal-status:empty{display:none}
+.cal-body{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:28px;align-items:start}
+.cal-months{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;min-width:0}
+.month{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:16px;min-width:0}
+.month h4{margin:0 0 8px;font:700 20px/1.1 var(--display);letter-spacing:-.01em}
+.month table{width:100%;border-collapse:separate;border-spacing:3px;table-layout:fixed}
+.month th{font:500 11px/1 var(--mono);letter-spacing:.06em;color:var(--muted);padding:4px 0 6px}
+.month td{height:58px;padding:0;vertical-align:top;border-radius:10px;position:relative;color:var(--ink);overflow:hidden}
+.month td .n{display:block;font:600 14px/1 var(--mono);padding:8px 0 0 8px;font-variant-numeric:tabular-nums}
+.month td .lb{display:block;font:600 10px/1.15 var(--body);padding:4px 2px 0 8px}
+.month td.we .n{color:var(--muted)}
+.month td.k-insc{background:color-mix(in srgb,var(--accent) 16%,var(--bg))}
+.month td.k-aval{background:color-mix(in srgb,var(--warm) 22%,var(--bg))}
+.month td.edge.k-insc{background:var(--accent);color:var(--bg)}
+.month td.edge.k-aval{background:var(--warm);color:var(--bg)}
+.month td.k-prel,.month td.k-final{background:var(--ink);color:var(--bg)}
+.month td.k-rec{box-shadow:inset 0 0 0 2px var(--accent);color:var(--ink)}
+.month td[class*="k-"] .n,.month td.edge .n{color:inherit}
+.cal-list{margin:0;padding:0;list-style:none;display:grid;gap:18px;align-content:start;min-width:0}
+.cal-list li{display:grid;gap:4px;align-content:start;border-left:4px solid var(--c);padding:2px 0 2px 14px}
+.cal-list li[data-k="insc"]{--c:var(--accent)}
+.cal-list li[data-k="aval"]{--c:var(--warm)}
+.cal-list li[data-k="prel"],.cal-list li[data-k="final"]{--c:var(--ink)}
+.cal-list li[data-k="rec"]{--c:var(--accent);border-left-style:dashed}
+.cal-list b{font-weight:600;color:var(--ink);font-size:16px;line-height:1.3}
+.cal-list .d{font:500 13px/1.45 var(--mono);color:var(--muted)}
+.cal-note{color:var(--muted);font-size:15px;border-top:1px solid var(--line);padding-top:16px}
+.cal-note a{color:var(--accent);text-underline-offset:3px}
+@media (max-width:900px){.cal-body{grid-template-columns:1fr}}
+@media (max-width:560px){.cal-months{grid-template-columns:1fr}.month{padding:12px}.month td{height:48px}.month td .n{padding:6px 0 0 5px;font-size:13px}.month td .lb{font-size:8px;padding:3px 0 0 4px;letter-spacing:-.01em}}
+.paths + .paths{margin-top:20px}
+.path .actions{margin-top:0;align-items:center}
+.path .fine{color:var(--muted);font-size:15px}
+.note-box{border-left:4px solid var(--warm);background:color-mix(in srgb,var(--warm) 12%,var(--bg));padding:12px 14px;border-radius:0 10px 10px 0;color:var(--ink);font-size:15px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.eligible .btn.out{background:transparent;color:var(--band-ink);border-color:var(--band-ink)}
+.eligible .btn.out:hover{background:color-mix(in srgb,#fff 14%,transparent)}
+.crit{margin:0;padding:0;list-style:none;display:grid;gap:16px}
+.crit li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;align-items:baseline}
+.crit b{font-weight:600;color:var(--ink);font-size:16px}
+.crit .mx{font:700 22px/1 var(--display);color:var(--accent);text-align:right;white-space:nowrap}
+.crit .lv{grid-column:1/-1;color:var(--muted);font-size:14px}
+.crit .meter{grid-column:1/-1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.crit .meter i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--sky),var(--accent));border-radius:99px}
+.crit .tot{border-top:1px solid var(--line);padding-top:14px}
+.ticks{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.ticks li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:12px;color:var(--muted);font-size:16px;align-items:start}
+.ticks li::before{content:"\2713";width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--bg);display:grid;place-items:center;font:700 13px/1 var(--body)}
+.bring li a{color:inherit;text-decoration:none}
+.bring li a:hover{text-decoration:underline}
 </style>
 <script>try{var _t=localStorage.getItem('estatlab-theme');if(_t==='light'||_t==='dark')document.documentElement.setAttribute('data-theme',_t)}catch(e){}</script>
 
@@ -216,9 +303,10 @@ footer b{color:var(--ink);font-family:var(--display);font-size:16px}
     </a>
     <nav aria-label="Principal">
       <a href="#sobre">Sobre</a>
-      <a href="#pratica">Na prática</a>
       <a href="#servicos">O que oferecemos</a>
       <a href="#publico">Quem atendemos</a>
+      <a href="#equipe">Equipe</a>
+      <a href="#participar">Como participar</a>
       <a class="cta" href="#contato">Contato</a>
     </nav>
     <button type="button" class="theme" id="theme-btn" aria-label="Alternar tema claro e escuro" data-eff="light">
@@ -255,48 +343,6 @@ footer b{color:var(--ink);font-family:var(--display);font-size:16px}
       <p>O projeto é vinculado ao Departamento de Estatística da UEPB e oferece apoio estatístico gratuito a estudantes de graduação e pós-graduação e a profissionais vinculados à instituição.</p>
       <p>O acompanhamento ajuda no desenvolvimento de Trabalhos de Conclusão de Curso, dissertações, teses e outras pesquisas que precisem de orientação estatística.</p>
       <p>Além dos atendimentos, o EstatLab promove cursos e oficinas para ampliar o conhecimento estatístico e o uso de ferramentas computacionais.</p>
-    </div>
-  </div>
-</section>
-
-<section class="lab" id="pratica">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">Estatística na prática</p>
-      <h2>Sorteie amostras e veja a curva aparecer</h2>
-      <p>Cada amostra é a média de alguns dados lançados. Quanto mais amostras e dados por amostra, mais o histograma se aproxima da curva normal. É o Teorema Central do Limite, um dos assuntos que trabalhamos nas oficinas.</p>
-    </div>
-    <div class="lab-grid">
-      <div class="canvas-box">
-        <canvas id="cv" role="img" aria-label="Histograma das médias das amostras com a curva normal teórica sobreposta"></canvas>
-      </div>
-      <div class="panel">
-        <div class="field">
-          <span class="lbl" id="lbl-n">Dados por amostra</span>
-          <div class="seg" role="group" aria-labelledby="lbl-n" id="seg-n">
-            <button type="button" data-n="1" aria-pressed="false">1</button>
-            <button type="button" data-n="2" aria-pressed="false">2</button>
-            <button type="button" data-n="5" aria-pressed="true">5</button>
-            <button type="button" data-n="12" aria-pressed="false">12</button>
-          </div>
-        </div>
-        <div class="field">
-          <span class="lbl" id="lbl-a">Sortear</span>
-          <div class="seg" role="group" aria-labelledby="lbl-a">
-            <button type="button" id="add10" aria-pressed="false">+10</button>
-            <button type="button" id="add100" aria-pressed="false">+100</button>
-            <button type="button" id="add1000" aria-pressed="false">+1000</button>
-            <button type="button" id="reset" aria-pressed="false">Zerar</button>
-          </div>
-        </div>
-        <dl class="stats" aria-live="polite">
-          <div><dt>Amostras</dt><dd id="s-n">0</dd></div>
-          <div><dt>Média</dt><dd id="s-m">0</dd></div>
-          <div><dt>Desvio</dt><dd id="s-s">0</dd></div>
-          <div><dt>Teórico</dt><dd id="s-t">0</dd></div>
-        </dl>
-        <p class="note">Desvio teórico da média: σ/√n, com σ ≈ 1,708 para um dado justo de seis faces.</p>
-      </div>
     </div>
   </div>
 </section>
@@ -365,6 +411,200 @@ footer b{color:var(--ink);font-family:var(--display);font-size:16px}
   </div>
 </section>
 
+<section id="equipe" hidden>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Equipe</p>
+      <h2>Quem faz o EstatLab acontecer</h2>
+      <p>O projeto reúne professores do Departamento de Estatística da UEPB e estudantes extensionistas.</p>
+    </div>
+    <div class="teamtabs" role="tablist" aria-label="Equipe">
+      <button type="button" role="tab" id="tt-prof" aria-controls="tp-prof" aria-selected="true">Professores responsáveis</button>
+      <button type="button" role="tab" id="tt-alu" aria-controls="tp-alu" aria-selected="false" tabindex="-1">Alunos extensionistas</button>
+    </div>
+    <div role="tabpanel" id="tp-prof" aria-labelledby="tt-prof">
+      <p class="team-intro">Os professores coordenam o projeto e orientam o apoio estatístico, os cursos e as oficinas.</p>
+      <div class="people">
+        <article class="person">
+          <div class="photo"><span class="initials" aria-hidden="true"></span><img src="assets/cleanderson-romualdo-fidelis.png" alt="" loading="lazy" onerror="this.remove()"></div>
+          <div class="pinfo">
+            <h3 class="pname">Prof. Dr. Cleanderson Romualdo Fidelis</h3>
+            <p class="prole">Professor responsável</p>
+            <p class="pdesc">Doutor em Estatística e Experimentação Agronômica pela ESALQ/USP, mestre em Matemática Aplicada e Estatística pela UFRN e professor do Departamento de Estatística da UEPB. Atua nas áreas de modelagem estatística, análise de sobrevivência, ciência de dados e aprendizado de máquina.<br><br><a href="http://lattes.cnpq.br/9961081404113997" target="_blank" rel="noopener">Currículo Lattes</a></p>
+          </div>
+        </article>
+        <article class="person">
+          <div class="photo"><span class="initials" aria-hidden="true"></span><img src="assets/erika-fialho-morais-xavier.png" alt="" loading="lazy" onerror="this.remove()"></div>
+          <div class="pinfo">
+            <h3 class="pname">Profª Dra. Érika Fialho Morais Xavier</h3>
+            <p class="prole">Professora responsável</p>
+            <p class="pdesc">Estatística e professora da UEPB, com experiência em ensino, pesquisa e assessoria estatística aplicada à saúde e a diferentes áreas do conhecimento.<br><br><a href="http://lattes.cnpq.br/0565638399131481" target="_blank" rel="noopener">Currículo Lattes</a></p>
+          </div>
+        </article>
+        <article class="person">
+          <div class="photo"><span class="initials" aria-hidden="true"></span><img src="assets/pedro-monteiro-de-almeida-junior.png" alt="" loading="lazy" onerror="this.remove()"></div>
+          <div class="pinfo">
+            <h3 class="pname">Prof. Dr. Pedro Monteiro de Almeida Júnior</h3>
+            <p class="prole">Professor responsável</p>
+            <p class="pdesc">Professor no Departamento de Estatística (UEPB). Desenvolve pesquisas nas áreas de séries temporais, modelos de regressão e estatística espacial. Também atua como cientista de dados no setor de Experiência do Usuário (UX).<br><br><a href="http://lattes.cnpq.br/7620146467708985" target="_blank" rel="noopener">Currículo Lattes</a></p>
+          </div>
+        </article>
+      </div>
+    </div>
+    <div role="tabpanel" id="tp-alu" aria-labelledby="tt-alu" hidden>
+      <p class="team-intro">Os estudantes extensionistas atendem a comunidade acadêmica e participam da organização dos cursos e oficinas.</p>
+      <div class="people">
+        <article class="person">
+          <div class="photo"><span class="initials" aria-hidden="true"></span><img src="assets/adrielly-rocha-de-sousa-ferreira.png" alt="" loading="lazy" onerror="this.remove()"></div>
+          <div class="pinfo">
+            <h3 class="pname">Adrielly Rocha de Sousa Ferreira</h3>
+            <p class="prole">Aluna extensionista</p>
+            <p class="pdesc">Meu nome é Adrielly, tenho 24 anos, sou natural de Campina Grande e estou no último período do curso de estatística da Universidade Estadual da Paraíba - Campus I, com interesse nas áreas de Análise Multivariada, Análise de Sobrevivência e Regressão<br><br><a href="https://lattes.cnpq.br/5428787586020628" target="_blank" rel="noopener">Currículo Lattes</a></p>
+          </div>
+        </article>
+        <article class="person">
+          <div class="photo"><span class="initials" aria-hidden="true"></span><img src="assets/elizeu-silva-de-medeiros.png" alt="" loading="lazy" onerror="this.remove()"></div>
+          <div class="pinfo">
+            <h3 class="pname">Elizeu Silva de Medeiros</h3>
+            <p class="prole">Aluno extensionista</p>
+            <p class="pdesc">Graduando em Estatística pela UEPB, com experiência em pesquisa científica e extensão universitária (PIBIC/CNPq e PROEX/UEPB). Tem interesse em modelagem preditiva, sensoriamento remoto e desenvolvimento de aplicações computacionais.<br><br><a href="https://lattes.cnpq.br/6534730479666967" target="_blank" rel="noopener">Currículo Lattes</a></p>
+          </div>
+        </article>
+        <article class="person">
+          <div class="photo"><span class="initials" aria-hidden="true"></span><img src="assets/italo-gabriel-da-silva.png" alt="" loading="lazy" onerror="this.remove()"></div>
+          <div class="pinfo">
+            <h3 class="pname">Ítalo Gabriel da Silva</h3>
+            <p class="prole">Aluno extensionista</p>
+            <p class="pdesc">Graduando em Bacharelado em Estatística pela Universidade Estadual da Paraíba (UEPB), com experiência em pesquisa científica e interesse nas áreas de Estatística Espacial, Séries Temporais e Modelos de Regressão, além de consultoria para análise de dados.<br><br><a href="https://lattes.cnpq.br/1558859767324947" target="_blank" rel="noopener">Currículo Lattes</a></p>
+          </div>
+        </article>
+        <article class="person">
+          <div class="photo"><span class="initials" aria-hidden="true"></span><img src="assets/jose-wanderson-ferreira-de-freitas.png" alt="" loading="lazy" onerror="this.remove()"></div>
+          <div class="pinfo">
+            <h3 class="pname">José Wanderson Ferreira de Freitas</h3>
+            <p class="prole">Aluno extensionista</p>
+            <p class="pdesc">Graduando em Estatística pela Universidade Estadual da Paraíba (UEPB), com interesse em pesquisa, consultoria estatística e análise de dados, especialmente nas áreas de Séries Temporais, Regressão e Modelagem Estatística.<br><br><a href="https://lattes.cnpq.br/1949763603111401" target="_blank" rel="noopener">Currículo Lattes</a></p>
+          </div>
+        </article>
+        <article class="person">
+          <div class="photo"><span class="initials" aria-hidden="true"></span><img src="assets/vinicius-marques-do-nascimento.png" alt="" loading="lazy" onerror="this.remove()"></div>
+          <div class="pinfo">
+            <h3 class="pname">Vinicius Marques do Nascimento</h3>
+            <p class="prole">Aluno extensionista</p>
+            <p class="pdesc">Graduação em Estatística pela Universidade Estadual da Paraíba (2026) e formação acadêmica prévia em Ciências Econômicas pela Universidade Federal Rural de Pernambuco. Atua profissionalmente nas áreas de Estatística Aplicada e Ciência de Dados. Tem interesse e atuação prática na convergência entre métodos quantitativos, inteligência artificial e teoria econômica.<br><br><a href="https://lattes.cnpq.br/2044291034050125" target="_blank" rel="noopener">Currículo Lattes</a></p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="participar" hidden>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Seleção de trabalhos 2026</p>
+      <h2>Como participar do processo seletivo</h2>
+      <p>O atendimento e as atividades são gratuitos. Veja como funciona a seleção de trabalhos, o calendário de 2026 e as regras para participar.</p>
+    </div>
+
+    <div class="facts" role="list">
+      <div role="listitem"><b>3</b><span>trabalhos com elaboração e acompanhamento imediato</span></div>
+      <div role="listitem"><b>até 9</b><span>trabalhos no cadastro de reserva</span></div>
+      <div role="listitem"><b>100</b><span>pontos máximos na classificação</span></div>
+      <div role="listitem"><b>18/11</b><span>último dia para inscrever, até 23h59</span></div>
+    </div>
+
+    <article class="cal-card" aria-labelledby="cal-h">
+      <div class="cal-top">
+        <div>
+          <span class="tag">Seleção de trabalhos 2026</span>
+          <h3 id="cal-h">Calendário da seleção</h3>
+        </div>
+        <p class="cal-status" id="cal-status" aria-live="polite"></p>
+      </div>
+      <div class="cal-body">
+      <div class="cal-months" id="cal-months"></div>
+      <ol class="cal-list" id="cal-list">
+        <li data-k="insc" data-from="2026-11-03" data-to="2026-11-18" data-lb="Abre|Fecha"><b>Divulgação e inscrições</b><span class="d">03/11 a 18/11, até 23h59</span></li>
+        <li data-k="aval" data-from="2026-11-20" data-to="2026-11-25" data-lb="Avalia|"><b>Avaliação das propostas</b><span class="d">20/11 a 25/11</span></li>
+        <li data-k="prel" data-from="2026-11-26" data-lb="Prelim."><b>Resultado preliminar</b><span class="d">26/11</span></li>
+        <li data-k="rec" data-from="2026-11-27" data-lb="Recurso"><b>Recurso por e-mail</b><span class="d">27/11, até 23h59</span></li>
+        <li data-k="final" data-from="2026-11-29" data-lb="Final"><b>Resultado final</b><span class="d">29/11</span></li>
+      </ol>
+      </div>
+      <p class="cal-note">Os resultados são divulgados no <a href="https://github.com/Estatlab" target="_blank" rel="noopener">GitHub do projeto</a>. Recursos, com justificativa, e dúvidas: <a href="mailto:contato.estatlab@gmail.com?subject=EstatLab%20-%20Sele%C3%A7%C3%A3o%20de%20trabalhos">contato.estatlab@gmail.com</a>.</p>
+    </article>
+
+    <div class="paths">
+      <article class="path">
+        <span class="tag">Inscrição gratuita</span>
+        <h3>Inscreva a sua pesquisa</h3>
+        <p>Podem ser inscritos TCCs, dissertações, teses e outras pesquisas que precisem de apoio estatístico, sejam compatíveis com as linhas de pesquisa de pelo menos um docente e caibam na capacidade de atendimento do projeto.</p>
+        <ol class="steps">
+          <li><div><b>Preencha o formulário.</b> Informe a sua identificação e o seu vínculo institucional.</div></li>
+          <li><div><b>Envie o resumo.</b> Até 2 páginas, com objetivo, metodologia, dados disponíveis ou coleta prevista, apoio solicitado e prazo.</div></li>
+          <li><div><b>Inclua a anuência do orientador,</b> quando houver.</div></li>
+          <li><div><b>Aguarde a verificação.</b> A equipe confere se a inscrição está completa, se o trabalho atende às linhas contempladas e se o atendimento é tecnicamente viável. Só propostas habilitadas são classificadas.</div></li>
+        </ol>
+        <p class="note-box"><b>Atenção:</b> não envie dados pessoais dos participantes da pesquisa nesta etapa.</p>
+      </article>
+
+      <article class="path">
+        <span class="tag">Classificação</span>
+        <h3>Como os trabalhos são classificados</h3>
+        <ul class="crit">
+          <li><b>Aderência às linhas docentes</b><span class="mx">30</span><span class="lv">Parcial: 10 pontos. Direta: 30 pontos.</span><span class="meter" aria-hidden="true"><i style="--w:100%"></i></span></li>
+          <li><b>Viabilidade do atendimento</b><span class="mx">25</span><span class="lv">Viável com ajustes: 10. Prontamente viável: 25.</span><span class="meter" aria-hidden="true"><i style="--w:83.3%"></i></span></li>
+          <li><b>Clareza do objetivo e da demanda</b><span class="mx">20</span><span class="lv">Baixa: 0. Média: 10. Alta: 20.</span><span class="meter" aria-hidden="true"><i style="--w:66.7%"></i></span></li>
+          <li><b>Vulnerabilidade socioeconômica autodeclarada</b><span class="mx">15</span><span class="lv">Não: 0. Sim: 15.</span><span class="meter" aria-hidden="true"><i style="--w:50%"></i></span></li>
+          <li><b>Contribuição acadêmica ou social justificada</b><span class="mx">10</span><span class="lv">Não demonstrada: 0. Parcial: 5. Clara: 10.</span><span class="meter" aria-hidden="true"><i style="--w:33.3%"></i></span></li>
+          <li class="tot"><b>Total máximo</b><span class="mx">100</span></li>
+        </ul>
+        <p class="fine"><b>Empate:</b> prevalecem as maiores notas em vulnerabilidade, aderência e viabilidade, nessa ordem. Se persistir, há sorteio registrado.</p>
+        <p class="fine"><b>Cadastro de reserva:</b> segue a classificação e é convocado conforme a disponibilidade durante a vigência do projeto, sem garantia de atendimento.</p>
+      </article>
+    </div>
+
+    <div class="paths">
+      <article class="path">
+        <span class="tag">Cursos e oficinas</span>
+        <h3>Quero aprender mais estatística</h3>
+        <p>Para ampliar o conhecimento estatístico e praticar o uso de ferramentas computacionais.</p>
+        <ol class="steps">
+          <li><div><b>Acompanhe as turmas.</b> A inscrição de cada curso ou oficina é divulgada separadamente, com conteúdo, datas, modalidade, vagas e formulário.</div></li>
+          <li><div><b>Faça a sua inscrição</b> pelo formulário da turma.</div></li>
+          <li><div><b>Participe.</b> Leve o seu computador quando a oficina usar ferramentas computacionais.</div></li>
+        </ol>
+        <div class="bring">
+          <span class="lbl">Onde acompanhar</span>
+          <ul><li><a href="https://github.com/Estatlab" target="_blank" rel="noopener">github.com/Estatlab</a></li><li><a href="mailto:contato.estatlab@gmail.com">contato.estatlab@gmail.com</a></li></ul>
+        </div>
+      </article>
+
+      <article class="path">
+        <span class="tag">Compromissos</span>
+        <h3>O que esperamos de quem é atendido</h3>
+        <ul class="ticks">
+          <li>Participar das reuniões do atendimento.</li>
+          <li>Cumprir os prazos acordados com a equipe.</li>
+          <li>Observar as exigências éticas aplicáveis à pesquisa.</li>
+          <li>Reconhecer o apoio do EstatLab nos trabalhos e publicações que resultarem do atendimento.</li>
+        </ul>
+        <p class="fine"><b>Publicações científicas:</b> o projeto incentiva que as pesquisas apoiadas virem artigos, resumos e apresentações em eventos. A coautoria de membros da equipe será combinada conforme a contribuição de cada um.</p>
+        <p class="fine">As informações dos formulários são usadas para organizar e avaliar as atividades do projeto. Casos omissos são resolvidos pela coordenação.</p>
+      </article>
+    </div>
+
+    <div class="eligible">
+      <p><b>Quem pode participar:</b> estudantes de graduação e pós-graduação e profissionais vinculados à UEPB. O atendimento e as atividades do projeto não têm custo. Inscrições de 03/11 a 18/11, até 23h59.</p>
+      <div class="cta-row">
+        <a class="btn" href="https://forms.gle/8TwoGKmSnTGorDxN6" target="_blank" rel="noopener" id="btn-form">Acessar formulário de inscrição</a>
+        <a class="btn out" href="#contato">Mais informações: fale com a equipe</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="contato">
   <div class="wrap contact">
     <div>
@@ -384,70 +624,32 @@ footer b{color:var(--ink);font-family:var(--display);font-size:16px}
 
 <footer>
   <div class="wrap">
-    <span><b>EstatLab</b> · Estatística ao alcance de todos</span>
+    <span class="fbrand"><a class="uepb" href="https://uepb.edu.br" target="_blank" rel="noopener" aria-label="UEPB, Universidade Estadual da Paraíba"><img class="img-light" src="assets/uepb.png" alt="Logomarca da UEPB" height="88"><img class="img-dark" src="assets/uepb_dark.png" alt="Logomarca da UEPB" height="88"></a><span><b>EstatLab</b> · Estatística ao alcance de todos</span></span>
     <span>Projeto de extensão do Departamento de Estatística da UEPB</span>
   </div>
 </footer>
 
 <script>
 (function(){
-  var cv=document.getElementById('cv'), ctx=cv.getContext('2d');
-  var N=5, counts={}, total=0, sum=0, sumsq=0;
-  var seed=20240611;
-  function rnd(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}
-  var live=false; function R(){return live?Math.random():rnd()}
-  function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
-  function reset(){counts={};total=0;sum=0;sumsq=0}
-  function draw1(){var s=0;for(var i=0;i<N;i++)s+=1+Math.floor(R()*6);counts[s]=(counts[s]||0)+1;total++;var m=s/N;sum+=m;sumsq+=m*m}
-  function add(k){for(var i=0;i<k;i++)draw1();render()}
-  function fmt(x){return x.toFixed(2).replace('.',',')}
-  function render(){
-    var dpr=window.devicePixelRatio||1, w=cv.clientWidth, h=cv.clientHeight;
-    cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
-    var L=36,Rr=10,T=14,B=48, pw=w-L-Rr, ph=h-T-B;
-    var ink=css('--ink'), muted=css('--muted'), line=css('--line'), bar=css('--bar'), hi=css('--bar-hi'), curve=css('--curve');
-    var mu=3.5, sd=Math.sqrt(35/12/N), bw=1/N;
-    var xs=function(x){return L+(x-0.5)/6*pw};
-    var maxC=1; for(var k in counts) if(counts[k]>maxC) maxC=counts[k];
-    var pk=total*bw/(sd*Math.sqrt(2*Math.PI)); var ymax=Math.max(maxC,pk,5)*1.12;
-    var ys=function(c){return T+ph-c/ymax*ph};
-    ctx.font='12px '+css('--mono'); ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.fillStyle=muted; ctx.strokeStyle=line; ctx.lineWidth=1;
-    for(var i=0;i<=4;i++){var v=ymax*i/4,y=ys(v);ctx.beginPath();ctx.moveTo(L,y);ctx.lineTo(w-Rr,y);ctx.stroke();ctx.fillText(Math.round(v),L-6,y)}
-    ctx.textAlign='center';ctx.textBaseline='top';
-    for(var t=1;t<=6;t++){ctx.fillText(t,xs(t),T+ph+8)}
-    ctx.fillText('média da amostra',L+pw/2,T+ph+28);
-    var gap=Math.min(2,pw/6*bw*0.12);
-    for(var s=N;s<=6*N;s++){var c=counts[s]||0; if(!c)continue; var m=s/N, x0=xs(m-bw/2)+gap/2, x1=xs(m+bw/2)-gap/2;
-      ctx.fillStyle=(c===maxC)?hi:bar; ctx.fillRect(x0,ys(c),Math.max(1,x1-x0),T+ph-ys(c))}
-    ctx.strokeStyle=curve;ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.beginPath();
-    for(var j=0;j<=200;j++){var x=0.5+6*j/200,d=total*bw*Math.exp(-0.5*Math.pow((x-mu)/sd,2))/(sd*Math.sqrt(2*Math.PI)),px=xs(x),py=ys(d);j?ctx.lineTo(px,py):ctx.moveTo(px,py)}
-    ctx.stroke();
-    ctx.strokeStyle=ink;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(L,T+ph);ctx.lineTo(w-Rr,T+ph);ctx.stroke();
-    var mean=total?sum/total:0, v2=total>1?(sumsq-total*mean*mean)/(total-1):0;
-    document.getElementById('s-n').textContent=total.toLocaleString('pt-BR');
-    document.getElementById('s-m').textContent=total?fmt(mean):'0,00';
-    document.getElementById('s-s').textContent=total>1?fmt(Math.sqrt(Math.max(v2,0))):'0,00';
-    document.getElementById('s-t').textContent=fmt(sd);
-    cv.setAttribute('aria-label','Histograma de '+total+' médias de amostras de '+N+' dados, com a curva normal teórica sobreposta');
-  }
-  function setN(n){N=n;reset();[].forEach.call(document.querySelectorAll('#seg-n button'),function(b){b.setAttribute('aria-pressed',String(+b.dataset.n===n))});seed=20240611;live=false;add(800);live=true}
-  document.getElementById('seg-n').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setN(+b.dataset.n)});
-  document.getElementById('add10').onclick=function(){live=true;add(10)};
-  document.getElementById('add100').onclick=function(){live=true;add(100)};
-  document.getElementById('add1000').onclick=function(){live=true;add(1000)};
-  document.getElementById('reset').onclick=function(){reset();render()};
-  window.addEventListener('resize',render);
-  try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',render)}catch(e){}
-  new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(render);
-  setN(5);
+  /* equipe: abas e iniciais no lugar da foto */
+  var tt=[].slice.call(document.querySelectorAll('.teamtabs [role="tab"]'));
+  function selT(t){tt.forEach(function(b){var on=b===t;b.setAttribute('aria-selected',String(on));b.tabIndex=on?0:-1;document.getElementById(b.getAttribute('aria-controls')).hidden=!on})}
+  tt.forEach(function(t,i){t.addEventListener('click',function(){selT(t)});
+    t.addEventListener('keydown',function(e){var k=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(!k)return;var n=tt[(i+k+tt.length)%tt.length];n.focus();selT(n);e.preventDefault()})});
+  var skip={de:1,da:1,do:1,dos:1,das:1,e:1};
+  [].forEach.call(document.querySelectorAll('.person'),function(p){
+    var av=p.querySelector('.initials'),im=p.querySelector('.photo img'),nm=p.querySelector('.pname').textContent.trim();
+    if(im)im.alt='Foto de '+nm;
+    var w=nm.replace(/^((Prof(\.|ª|º)?|Dr(a)?\.?|Me\.?)\s+)+/i,'').split(/\s+/).filter(function(x){return x&&!skip[x.toLowerCase()]});
+    av.textContent=((w[0]||'?')[0]+(w.length>1?w[w.length-1][0]:'')).toUpperCase();
+  });
 })();
 </script>
 
 <script>
 (function(){
-  var map={inicio:['inicio'],sobre:['sobre','proposito'],pratica:['pratica'],servicos:['servicos'],publico:['publico'],contato:['contato']};
-  var all=['inicio','sobre','proposito','pratica','servicos','publico','contato'];
+  var map={inicio:['inicio'],sobre:['sobre','proposito'],servicos:['servicos'],publico:['publico'],equipe:['equipe'],participar:['participar'],contato:['contato']};
+  var all=['inicio','sobre','proposito','servicos','publico','equipe','participar','contato'];
   function show(tab,push){
     if(!map[tab])tab='inicio';
     all.forEach(function(id){var el=document.getElementById(id);if(!el)return;
@@ -478,6 +680,64 @@ footer b{color:var(--ink);font-family:var(--display);font-size:16px}
   });
   try{mq.addEventListener('change',sync)}catch(e){}
   sync();
+})();
+</script>
+
+
+<script>
+(function(){
+  /* calendário da seleção: as datas vêm dos atributos data-from/data-to da lista #cal-list */
+  var list=document.getElementById('cal-list'), box=document.getElementById('cal-months'), st=document.getElementById('cal-status');
+  if(!list||!box)return;
+  var MES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  var DIA=['D','S','T','Q','Q','S','S'], DIAL=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+  function pd(t){var a=t.split('-');return new Date(+a[0],+a[1]-1,+a[2])}
+  function key(d){return d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate()}
+  var ev=[].map.call(list.querySelectorAll('li'),function(li){
+    var f=pd(li.dataset.from), t=li.dataset.to?pd(li.dataset.to):f, lb=(li.dataset.lb||'').split('|');
+    return {k:li.dataset.k,f:f,t:t,fk:key(f),tk:key(t),name:li.querySelector('b').textContent,lb:lb,range:!!li.dataset.to};
+  });
+  var first=ev[0].f, last=ev[ev.length-1].t, months=[], c=new Date(first.getFullYear(),first.getMonth(),1);
+  while(c<=last){months.push(new Date(c));c.setMonth(c.getMonth()+1)}
+  var now=new Date(), todayK=key(now);
+
+  months.forEach(function(m){
+    var y=m.getFullYear(), mo=m.getMonth(), nd=new Date(y,mo+1,0).getDate(), off=new Date(y,mo,1).getDay();
+    var h='<div class="month"><h4>'+MES[mo].charAt(0).toUpperCase()+MES[mo].slice(1)+' de '+y+'</h4><table><thead><tr>';
+    DIA.forEach(function(d,i){h+='<th scope="col" abbr="'+DIAL[i]+'">'+d+'</th>'});
+    h+='</tr></thead><tbody><tr>';
+    for(var i=0;i<off;i++)h+='<td aria-hidden="true"></td>';
+    for(var d=1;d<=nd;d++){
+      var dt=new Date(y,mo,d), k=key(dt), wd=dt.getDay(), cls=[], lab='', desc=[];
+      if(wd===0||wd===6)cls.push('we');
+      ev.forEach(function(e){
+        if(k<e.fk||k>e.tk)return;
+        cls.push('k-'+e.k);
+        var l='';
+        if(e.range){if(k===e.fk){l=e.lb[0]||'';cls.push('edge')}else if(k===e.tk){l=e.lb[1]||'';cls.push('edge')}}
+        else l=e.lb[0]||'';
+        if(l)lab=l;
+        desc.push(e.name+(e.range&&k===e.fk?' (início)':e.range&&k===e.tk?' (fim)':''));
+      });
+      var al=d+' de '+MES[mo]+(desc.length?': '+desc.join('; '):'');
+      h+='<td class="'+cls.join(' ')+'" aria-label="'+al+'" title="'+al+'"><span class="n">'+d+'</span>'+(lab?'<span class="lb">'+lab+'</span>':'')+'</td>';
+      if(wd===6&&d<nd)h+='</tr><tr>';
+    }
+    var tail=(off+nd)%7; if(tail)for(var j=tail;j<7;j++)h+='<td aria-hidden="true"></td>';
+    h+='</tr></tbody></table></div>';
+    box.insertAdjacentHTML('beforeend',h);
+  });
+
+  /* situação de hoje */
+  var ins=ev[0], DAY=864e5;
+  function diff(a,b){return Math.round((Date.UTC(b.getFullYear(),b.getMonth(),b.getDate())-Date.UTC(a.getFullYear(),a.getMonth(),a.getDate()))/DAY)}
+  function pl(n,s,p){return n+' '+(n===1?s:p)}
+  var msg='', k=todayK;
+  if(k<ins.fk){var n=diff(now,ins.f);msg=n===1?'Inscrições abrem amanhã':'Inscrições abrem em '+pl(n,'dia','dias')}
+  else if(k<=ins.tk){var n2=diff(now,ins.t);msg=n2===0?'Último dia de inscrição, até 23h59':'Inscrições abertas · encerram em '+pl(n2,'dia','dias')}
+  else if(k<=ev[ev.length-1].tk)msg='Inscrições encerradas · seleção em andamento';
+  else msg='Seleção encerrada · veja o resultado no GitHub';
+  st.textContent=msg;
 })();
 </script>
 
